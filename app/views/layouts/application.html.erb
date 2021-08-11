@@ -4,12 +4,48 @@
     <title>TimeTracker</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-    <%= yield %>
+  <body>    
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="menu">
+          <li class="menu-text">Time Tracker</li>
+          <% if current_user %>
+            <% if current_user.admin? %>
+              <li>
+                <%= link_to "All Entries", admin_entries_path %>
+              </li>
+            <% end %>
+            <li>
+              <%= link_to "Profile", profile_path %>
+            </li>
+            <li>
+              <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to "Home", root_path %>
+            </li>
+            <li>
+              <%= link_to "Log in", new_user_session_path %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <% flash.each do |type, msg| %>
+      <div class="notifications">
+          <div class="notification is-light <%= type === 'notice' ? 'is-success' : 'is-danger' %>">
+              <%= msg %>
+          </div>
+      </div>
+    <% end %>
+    <main>
+      <%= yield %>
+    </main>  
   </body>
 </html>

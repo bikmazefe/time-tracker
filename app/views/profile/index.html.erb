@@ -1,0 +1,73 @@
+<h2>Profile</h2>
+<div class="grid-container">
+    <div class="grid-x">
+        <div class="cell ongoing">
+            <% if @ongoing %>
+                <div class="callout success">
+                    <p id="ongoing-duration" data-started-at="<%= @ongoing.started_at %>"><%= @ongoing.duration %></p>
+                    <%= link_to "Finish", finish_entry_path(@ongoing), method: :post %>
+                </div>
+            <% else %>
+                <%= form_with model: @startable_entry,  method: :post, local: true do |f| %>
+                    <div class="callout success">
+                        <h4>Start new entry</h4>
+                        <div class="grid-x">
+                            <div class="medium-4 cell" ><%= f.select :entry_type, options_for_select([ ['Business'], ['Personal'] ]), {prompt: "Select a type..."}, required: true %></div>
+                            <div class="medium-4 cell" ><%= f.text_field :comment, placeholder: "Your comment...", required: true %></div>
+                            <div class="medium-4 cell" >
+                                <%= f.submit "Start", class: "button success" %>
+                            </div>
+                        </div>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+        <div class="cell">
+            <div class="callout primary">
+                <h4>Add entry manually</h4>
+                <%= form_with model: @manual_entry,  method: :post, local: true do |f| %>
+                    <label>
+                        Start at:
+                        <%= f.datetime_field :started_at %>
+                    </label>
+                    <label>
+                        Finish at:
+                        <%= f.datetime_field :finished_at %>
+                    </label>
+                    <label>
+                        Entry type:
+                        <%= f.select :entry_type, options_for_select([ ['Business'], ['Personal'] ]), {prompt: "Please Select..."}, required: true %>
+                    </label>
+                    <label>
+                        Comment:
+                        <%= f.text_field :comment %>
+                    </label>
+                    <%= f.submit "Create", class: "button" %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-scroll grid-padding-y">
+    <table class="hover">
+      <thead>
+        <tr>
+          <th width="150">Type</th>
+          <th width="200">Comment</th>
+          <th width="200">Duration</th>
+          <th width="300">Finished</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @finished_entries.each do |entry| %>
+        <tr>
+          <td><strong><%= entry.entry_type %></strong></td>
+          <td><%= entry&.comment %></td>
+          <td><%= entry.duration %></td>
+          <td><%= format_date(entry.finished_at) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p class="text-center"><%= "You don't have any entries." if !@finished_entries.any? %></p>
+</div>  

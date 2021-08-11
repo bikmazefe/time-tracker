@@ -1,0 +1,26 @@
+@import '~foundation-sites/scss/foundation';
+@import 'settings';
+@include foundation-global-styles;
+@include foundation-forms;
+@include foundation-typography;
+@include foundation-menu;
+@include foundation-dropdown-menu;
+@include foundation-top-bar;
+@include foundation-title-bar;
+@include foundation-menu-icon;
+@include foundation-sticky;
+@include foundation-table;
+@include foundation-callout;
+@include foundation-button;
+@include foundation-xy-grid-classes;
+
+
+main{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 10px 30px 10px;
+}
+
+.grid-container{
+    margin: 30px auto;
+}
