@@ -1,0 +1,42 @@
+%h2 All Entries
+= form_with url: admin_entries_path, local: true, method: :get do |f|
+    .callout.primary
+        %h4 Search Entries
+        .grid-x.grid-padding-x
+            .medium-6.cell
+                = f.label "q[user_ids]" do 
+                    Users
+                    = f.select "q[user_ids]", options_from_collection_for_select(@users, :id, :email, params.dig(:q, :user_ids)), {:include_blank => "Select user(s)", :include_hidden => false}, :multiple => true
+            .medium-6.cell
+                = f.label "q[entry_type]" do 
+                    Entry types
+                    = f.select "q[entry_type]", @entry_types, {:include_blank => "All"}
+            .medium-6.cell
+                = f.label "q[from]" do 
+                    From
+                    = f.date_field "q[from]"
+            .medium-6.cell
+                = f.label "q[to]" do 
+                    To
+                    = f.date_field "q[to]"
+        = f.submit "Search", name: nil, class: "button"
+.table-scroll.grid-padding-y
+    %table{class: "hover"}
+        %thead
+            %tr
+                %th{width: "200"} User
+                %th{width: "150"} Type
+                %th{width: "200"} Comment
+                %th{width: "200"} Duration
+                %th{width: "300"} Started
+                %th{width: "300"} Finished
+        %tbody
+            - @entries.each do |entry|
+                %tr
+                    %td= entry.user.email
+                    %td= entry.entry_type
+                    %td= entry&.comment
+                    %td= entry.duration
+                    %td= format_date(entry.started_at)
+                    %td= format_date(entry.finished_at)
+    %p{class: "text-center"}= "Nothing found" if !@entries.any?
