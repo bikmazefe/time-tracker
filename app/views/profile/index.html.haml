@@ -1,7 +1,7 @@
 %h2 Profile
 .grid-container
     .grid-x
-        - if params[:entry_type] == "manual"
+        - if params[:mode] == "manual"
             .cell
                 .callout.primary
                     %h4 Add entry manually
@@ -36,7 +36,7 @@
                                 .medium-4.cell= f.text_field :comment, placeholder: "Your comment...", required: true
                                 .medium-4.cell= f.submit "Start", class: "button success"
             .cell.text-right
-                = link_to "📋 Switch to manual mode", profile_path(entry_type: "manual"), class: "clear button"
+                = link_to "📋 Switch to manual mode", profile_path(mode: "manual"), class: "clear button"
 .table-scroll.grid-padding-y
     = pagy_foundation_nav(@pagy).html_safe
     %table{class: "hover"}

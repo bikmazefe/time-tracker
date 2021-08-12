@@ -22,17 +22,15 @@ class Entry < ApplicationRecord
     "%02d:%02d:%02d" % [hours, minutes, seconds]
   end
 
-  def self.filter(query_param)
+  def self.search(query_param)
     if query_param
-      from_date = query_param[:from].empty? ? Date.today - 10.years : Date.parse(query_param[:from])
-      to_date = query_param[:to].empty? ? Date.today + 10.years : Date.parse(query_param[:to])
-      entries = Entry.at_between(from_date, to_date)
+      from_date = query_param[:from].blank? ? Date.today - 10.years : Date.parse(query_param[:from])
+      to_date = query_param[:to].blank? ? Date.today + 10.years : Date.parse(query_param[:to])
+      user_ids = query_param[:user_ids].blank? ? User.without_admins.pluck(:id) : query_param[:user_ids]
 
-      if query_param[:user_ids] && !query_param[:user_ids].empty?
-        entries = entries.by_user(query_param[:user_ids])
-      end
+      entries = Entry.at_between(from_date, to_date).by_user(user_ids)
 
-      if !query_param[:entry_type].empty?
+      if query_param[:entry_type].present?
         entries = entries.where(entry_type: query_param[:entry_type])
       end
 
