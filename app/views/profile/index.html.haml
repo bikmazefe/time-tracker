@@ -25,7 +25,7 @@
             .cell.ongoing
                 -if @ongoing
                     .callout.success
-                        #ongoing-duration{:data => {:started_at => @ongoing.started_at}}= @ongoing.duration
+                        #ongoing-duration{:data => {:started_at => @ongoing.started_at}}= format_duration(@ongoing.duration)
                         =link_to "Finish", finish_entry_path(@ongoing), :method => :post
                 -else
                     =form_with :model => @startable_entry, :method => :post, :local => true do |f|
@@ -35,8 +35,9 @@
                                 .medium-4.cell= f.select :entry_type, options_for_select([ ['Business'], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
                                 .medium-4.cell= f.text_field :comment, placeholder: "Your comment...", required: true
                                 .medium-4.cell= f.submit "Start", class: "button success"
-            .cell.text-right
-                = link_to "📋 Switch to manual mode", profile_path(mode: "manual"), class: "clear button"
+            -if !@ongoing
+                .cell.text-right
+                    = link_to "📋 Switch to manual mode", profile_path(mode: "manual"), class: "clear button"
 .table-scroll.grid-padding-y
     = pagy_foundation_nav(@pagy).html_safe
     %table{class: "hover"}

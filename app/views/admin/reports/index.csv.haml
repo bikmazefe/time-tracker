@@ -1,0 +1,4 @@
+- headers = ["Email", "Job Entries", "Personal Entries", "Total Duration"] 
+= CSV.generate_line headers
+- @selected_users.each do |user| 
+    = CSV.generate_line([user.email, user.entry_count_by_type("Business"), user.entry_count_by_type("Personal"), format_duration(user.total_entry_duration(params[:from], params[:to]))]) 
