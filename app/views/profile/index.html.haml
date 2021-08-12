@@ -37,7 +37,8 @@
                                 .medium-4.cell= f.submit "Start", class: "button success"
             .cell.text-right
                 = link_to "📋 Switch to manual mode", profile_path(entry_type: "manual"), class: "clear button"
-.table-scroll.grid-padding-y 
+.table-scroll.grid-padding-y
+    = pagy_foundation_nav(@pagy).html_safe
     %table{class: "hover"}
         %thead
             %tr
