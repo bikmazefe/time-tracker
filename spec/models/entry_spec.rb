@@ -5,13 +5,13 @@ RSpec.describe Entry, type: :model do
   it { should validate_presence_of(:started_at) }
   it { should validate_presence_of(:entry_type) }
 
-  describe "#duration" do
+  describe "#duration_string" do
     it "returns the total duration of the entry with correct format" do
       start_time = DateTime.new(2021, 10, 31, 2, 2, 2, "+03:00")
       end_time = DateTime.new(2021, 10, 31, 5, 23, 10, "+03:00")
       entry = FactoryBot.create(:entry, started_at: start_time, finished_at: end_time)
 
-      expect(entry.duration).to eq "03:21:08"
+      expect(entry.duration_string).to eq "03:21:08"
     end
   end
 

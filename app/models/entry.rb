@@ -8,8 +8,8 @@ class Entry < ApplicationRecord
   scope :ongoing, -> { where(finished_at: nil) }
   scope :finished, -> { where.not(finished_at: nil) }
 
-  def duration
-    seconds_diff = (started_at - (finished_at || DateTime.now)).to_i.abs
+  def duration_string
+    seconds_diff = self.duration
 
     hours = seconds_diff / 3600
     seconds_diff -= hours * 3600
@@ -20,6 +20,10 @@ class Entry < ApplicationRecord
     seconds = seconds_diff
 
     "%02d:%02d:%02d" % [hours, minutes, seconds]
+  end
+
+  def duration
+    (started_at - (finished_at || DateTime.now)).to_i.abs
   end
 
   def self.search(query_param)
