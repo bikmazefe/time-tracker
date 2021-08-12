@@ -1,4 +1,6 @@
 class Entry < ApplicationRecord
+  before_save :set_duration
+
   belongs_to :user
 
   validates_presence_of :started_at, :entry_type
@@ -7,24 +9,6 @@ class Entry < ApplicationRecord
   scope :at_between, lambda { |from, to| finished.where(finished_at: from.beginning_of_day..to.end_of_day) }
   scope :ongoing, -> { where(finished_at: nil) }
   scope :finished, -> { where.not(finished_at: nil) }
-
-  def duration_string
-    seconds_diff = self.duration
-
-    hours = seconds_diff / 3600
-    seconds_diff -= hours * 3600
-
-    minutes = seconds_diff / 60
-    seconds_diff -= minutes * 60
-
-    seconds = seconds_diff
-
-    "%02d:%02d:%02d" % [hours, minutes, seconds]
-  end
-
-  def duration
-    (started_at - (finished_at || DateTime.now)).to_i.abs
-  end
 
   def self.search(query_param)
     if query_param
@@ -41,6 +25,15 @@ class Entry < ApplicationRecord
       entries
     else
       Entry.finished
+    end
+  end
+
+  private
+
+  def set_duration
+    if finished_at
+      # Save duration as seconds
+      self.duration = (started_at - finished_at).to_i.abs
     end
   end
 end

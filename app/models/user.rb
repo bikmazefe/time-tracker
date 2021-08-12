@@ -16,12 +16,9 @@ class User < ApplicationRecord
     if from.present? && to.present?
       entries
         .at_between(from, to)
-        .collect { |e| e.duration }
-        .reduce(0) { |memo, num| memo + num }
+        .sum(:duration)
     else
-      entries
-        .collect { |e| e.duration }
-        .reduce(0) { |memo, num| memo + num }
+      entries.sum(:duration)
     end
   end
 end

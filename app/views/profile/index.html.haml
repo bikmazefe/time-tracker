@@ -52,7 +52,7 @@
                 %tr
                     %td= entry.entry_type
                     %td= entry&.comment 
-                    %td= entry.duration
+                    %td= format_duration(entry.duration)
                     %td= format_date(entry.started_at) 
                     %td= format_date(entry.finished_at) 
     %p{class: "text-center"}= "You don't have any entries." if !@finished_entries.any?
