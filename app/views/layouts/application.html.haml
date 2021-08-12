@@ -19,8 +19,8 @@
                             %li 
                                 %a Admin 
                                 %ul{class: "menu vertical"}
-                                    %li= link_to "All Entries", admin_entries_path
-                                    %li= link_to "Users", admin_entries_path
+                                    %li= link_to "Entries", admin_entries_path
+                                    %li= link_to "Reports", admin_reports_path
                         %li= link_to "Profile", profile_path
                         %li= link_to "Log out", destroy_user_session_path, method: :delete
                     - else 

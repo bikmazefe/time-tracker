@@ -1,0 +1,20 @@
+%h2 Reports
+.table-scroll.grid-padding-y
+    = pagy_foundation_nav(@pagy).html_safe
+    %table{class: "hover"}
+        %thead
+            %tr
+                %th{width: "150"} Email
+                %th{width: "200"} Business Entries
+                %th{width: "200"} Personal Entries
+                %th{width: "200"} Total Entries
+                %th{width: "300"} Total Duration
+        %tbody
+            - @users.each do |user|
+                %tr
+                    %td= user.email
+                    %td= user.entry_count_by_type("Business")
+                    %td= user.entry_count_by_type("Personal")
+                    %td= user.entries.size 
+                    %td= format_duration(user.total_entry_duration(params[:to], params[:from]))
+    %p{class: "text-center"}= "No users found." if !@users.any?
