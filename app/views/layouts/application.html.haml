@@ -11,12 +11,16 @@
     %body 
         .top-bar
             .top-bar-left
-                %ul{class: "menu"}
+                %ul{class: "dropdown menu", data: {"dropdown-menu": true}}
                     %li{class: "menu-text"} Time Tracker 
                     %li= link_to "Home", root_path
                     - if current_user 
                         - if current_user.admin?
-                            %li= link_to "All Entries", admin_entries_path
+                            %li 
+                                %a Admin 
+                                %ul{class: "menu vertical"}
+                                    %li= link_to "All Entries", admin_entries_path
+                                    %li= link_to "Users", admin_entries_path
                         %li= link_to "Profile", profile_path
                         %li= link_to "Log out", destroy_user_session_path, method: :delete
                     - else 

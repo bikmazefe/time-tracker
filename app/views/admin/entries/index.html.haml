@@ -21,6 +21,7 @@
                     = f.date_field "q[to]"
         = f.submit "Search", name: nil, class: "button"
 .table-scroll.grid-padding-y
+    = pagy_foundation_nav(@pagy).html_safe
     %table{class: "hover"}
         %thead
             %tr
