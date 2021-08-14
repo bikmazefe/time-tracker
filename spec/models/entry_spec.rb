@@ -5,27 +5,32 @@ RSpec.describe Entry, type: :model do
   it { should validate_presence_of(:started_at) }
   it { should validate_presence_of(:entry_type) }
 
-  # describe "#duration_string" do
-  #   it "returns the total duration of the entry with correct format" do
-  #     start_time = DateTime.new(2021, 10, 31, 2, 2, 2, "+03:00")
-  #     end_time = DateTime.new(2021, 10, 31, 5, 23, 10, "+03:00")
-  #     entry = FactoryBot.create(:entry, started_at: start_time, finished_at: end_time)
+  describe "#duration" do
+    it "returns the total duration of the entry with correct format" do
+      start_time = DateTime.new(2021, 10, 31, 2, 2, 2)
+      end_time = DateTime.new(2021, 10, 31, 5, 23, 10)
+      entry = FactoryBot.create(:entry, started_at: start_time, finished_at: end_time)
 
-  #     expect(entry.duration_string).to eq "03:21:08"
-  #   end
-  # end
+      expect(entry.duration).to eq 12068
+    end
+  end
 
-  describe ".by_user" do
-    it "returns the entries for the given user(s)" do
-      user1 = FactoryBot.create(:user)
-      user2 = FactoryBot.create(:user)
-      user3 = FactoryBot.create(:user)
-      FactoryBot.create_list(:entry, 5, user: user1)
-      FactoryBot.create_list(:entry, 5, user: user2)
-      FactoryBot.create_list(:entry, 5, user: user3)
+  describe ".total_duration" do
+    let!(:entry1) { FactoryBot.create(:entry, started_at: DateTime.new(2021, 8, 12, 9, 20, 30), finished_at: DateTime.new(2021, 8, 12, 10, 30, 30)) } # Duration 4200 sec
+    let!(:entry2) { FactoryBot.create(:entry, started_at: DateTime.new(2021, 8, 16, 7), finished_at: DateTime.new(2021, 8, 16, 9, 20, 35)) } #Duration 8435
 
-      expect(Entry.by_user([user1.id, user2.id])).to eq user1.entries + user2.entries
-      expect(Entry.by_user([user3.id])).not_to include(user3.entries)
+    it "returns the total duration of user's entries" do
+      expect(Entry.total_duration).to eq 12635
+    end
+  end
+
+  describe ".count_by_type" do
+    it "returns the number of entries with the given type" do
+      FactoryBot.create_list(:entry, 5, entry_type: "Work")
+      FactoryBot.create_list(:entry, 5, entry_type: "Personal")
+
+      expect(Entry.count_by_type("Work")).to eq 5
+      expect(Entry.count_by_type("Personal")).to eq 5
     end
   end
 
