@@ -7,14 +7,14 @@
                 = f.label "q[user_ids]" do 
                     Users
                     = f.select "q[user_ids]", options_from_collection_for_select(User.all, :id, :email, params.dig(:q, :user_ids)), {:include_blank => "Select user(s)", :include_hidden => false}, :multiple => true
-            .medium-6.cell{id: "date-pickers"}
+            .medium-6.cell
                 = f.label "q[from]" do 
                     From
                     = f.date_field "q[from]"
                 = f.label "q[to]" do 
                     To
                     = f.date_field "q[to]"
-            .button-group.cell
+            .button-group.cell{style: "margin-top: 30px;"}
                 = f.submit "List Reports", name: nil, class: "button", data: { disable_with: false }, onClick: "changeFormat('html')", data: { disable_with: false }
                 = f.submit "Download as CSV", name: nil, class: "button success", onClick: "changeFormat('csv')", data: { disable_with: false }
                 = f.submit "Download as Excel", name: nil, class: "button success", onClick: "changeFormat('xlsx')", data: { disable_with: false }
