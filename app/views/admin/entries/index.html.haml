@@ -10,7 +10,7 @@
             .medium-6.cell
                 = f.label "q[entry_type]" do 
                     Entry types
-                    = f.select "q[entry_type]", @entry_types, {:include_blank => "All"}
+                    = f.select "q[entry_type]", options_for_select([["Personal"], ["Work"]], params.dig(:q, :entry_type)), {:include_blank => "All"}
             .medium-6.cell
                 = f.label "q[from]" do 
                     From

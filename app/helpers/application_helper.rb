@@ -18,4 +18,15 @@ module ApplicationHelper
 
     "%02d:%02d:%02d" % [hours, minutes, seconds]
   end
+
+  def get_report_title
+    from = params.dig(:q, :from)
+    from_date = Date.parse(params[:q][:from]).strftime("%B %d, %Y") if from.present?
+    to = params.dig(:q, :to)
+    to_date = Date.parse(params[:q][:to]).strftime("%B %d, %Y") if to.present?
+
+    if from_date || to_date
+      "Results between <strong>#{from_date || "..."}</strong> - <strong>#{to_date || "..."}</strong>"
+    end
+  end
 end
