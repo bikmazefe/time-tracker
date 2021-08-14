@@ -14,7 +14,7 @@
                             = f.time_field :finish_time
                         =f.label :entry_type do
                             Entry type 
-                            = f.select :entry_type, options_for_select([ ['Business'], ['Personal'] ]), {prompt: "Please Select..."}, required: true
+                            = f.select :entry_type, options_for_select([ ['Work'], ['Personal'] ]), {prompt: "Please Select..."}, required: true
                         =f.label :comment do
                             Comment
                             = f.text_field :comment
@@ -23,16 +23,26 @@
                 = link_to "🕐 Switch to timer mode", profile_path, class: "clear button"
         - else 
             .cell.ongoing
-                -if @ongoing
-                    .callout.success
-                        #ongoing-duration{:data => {:started_at => @ongoing.started_at}}= format_duration(@ongoing.duration)
-                        =link_to "Finish", finish_entry_path(@ongoing), :method => :post
-                -else
-                    =form_with :model => @startable_entry, :method => :post, :local => true do |f|
-                        .callout.success 
+                .callout.success
+                    -if @ongoing
+                        %h4 Ongoing Entry
+                        .grid-x.align-center-middle.text-center
+                            .cell.small-3.flex-container.flex-dir-column
+                                %strong Type:
+                                %span= @ongoing.entry_type
+                            .cell.small-3.flex-container.flex-dir-column
+                                %strong Comment:
+                                %span= @ongoing&.comment
+                            .cell.small-3.flex-container.flex-dir-column
+                                %strong Duration:
+                                #ongoing-duration{:data => {:started_at => @ongoing.started_at}}= format_duration(@ongoing.duration)
+                            .cell.small-1
+                            =link_to "Finish", finish_entry_path(@ongoing), :method => :post, class: "button" 
+                    -else
+                        =form_with :model => @startable_entry, :method => :post, :local => true do |f|
                             %h4 Start timer
                             .grid-x.grid-margin-x
-                                .medium-4.cell= f.select :entry_type, options_for_select([ ['Business'], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
+                                .medium-4.cell= f.select :entry_type, options_for_select([ ["Work"], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
                                 .medium-4.cell= f.text_field :comment, placeholder: "Your comment...", required: true
                                 .medium-4.cell= f.submit "Start", class: "button success"
             -if !@ongoing

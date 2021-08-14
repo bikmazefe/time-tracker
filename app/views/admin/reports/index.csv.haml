@@ -1,4 +1,4 @@
-- headers = ["Email", "Job Entries", "Personal Entries", "Total Duration"] << get_report_title
+- headers = ["Email", "Work Entries", "Personal Entries", "Total Duration"] << get_report_title
 = CSV.generate_line headers
 - @selected_users.each do |user| 
     - user_entries = user.entries.search(params[:q])

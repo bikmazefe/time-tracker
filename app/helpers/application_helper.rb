@@ -26,7 +26,7 @@ module ApplicationHelper
     to_date = Date.parse(params[:q][:to]).strftime("%B %d, %Y") if to.present?
 
     if from_date || to_date
-      "Results between <strong>#{from_date || "..."}</strong> - <strong>#{to_date || "..."}</strong>"
+      "Results between <strong>#{from_date || "..."}</strong> - <strong>#{to_date || "..."}</strong>".html_safe
     end
   end
 end

@@ -1,0 +1,13 @@
+wb = xlsx_package.workbook
+
+s = wb.styles
+green_cell = s.add_style bg_color: "04C4A7", fg_color: "FF", sz: 14, alignment: { horizontal: :center, vertical: :center }
+normal_cell = s.add_style alignment: { horizontal: :center }
+
+sheet = wb.add_worksheet(name: Date.today.strftime("%B %d, %Y"))
+sheet.add_row ["Email", "Work Entries", "Personal Entries", "Total Duration", get_report_title], style: [green_cell, green_cell], height: 30
+
+@selected_users.each do |user|
+  user_entries = user.entries.search(params[:q])
+  sheet.add_row [user.email, user_entries.count_by_type("Work"), user_entries.count_by_type("Personal"), format_duration(user_entries.total_duration)], alignment: { horizontal: :center, vertical: :center }, height: 25
+end

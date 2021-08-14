@@ -12,6 +12,9 @@ class Admin::ReportsController < ApplicationController
         response.headers["Content-Disposition"] = "attachment; filename=Report-#{Date.today}.csv"
         render :template => "admin/reports/index.csv.haml"
       end
+      format.xlsx do
+        response.headers["Content-Disposition"] = "attachment; filename=Report-#{Date.today}.xlsx"
+      end
     end
   end
 
