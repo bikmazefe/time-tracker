@@ -1,0 +1,7 @@
+<% flash.each do |type, msg| %>
+    <div class="flash-wrapper">
+        <div class="flash callout <%= type == 'notice' ? 'success' : 'alert' %>">
+            <%= msg %>
+        </div>
+    </div>
+<% end %>

@@ -16,6 +16,15 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+
+
+require("css/application.scss")
+
+import { Foundation } from 'foundation-sites'
+import $ from 'jquery'
+
+document.addEventListener('turbolinks:load', () => $(document).foundation());
+
 window.addEventListener('turbolinks:load', () => {
     const ongoing = document.getElementById('ongoing-duration');
     
@@ -44,9 +53,15 @@ window.addEventListener('turbolinks:load', () => {
 })
 
 
-require("css/application.scss")
-
-import { Foundation } from 'foundation-sites'
-import $ from 'jquery'
-
-document.addEventListener('turbolinks:load', () => $(document).foundation());
+// Hide flash after 5 seconds.
+function hideFlash() {
+    setInterval(function() {
+      let flashWrapper = document.querySelector('.flash-wrapper');
+      if(flashWrapper){
+        flashWrapper.classList.add('exit');
+        setTimeout(() => flashWrapper.style.display = 'none', 500);
+      }
+    }, 5000);
+  }
+    
+  hideFlash();
