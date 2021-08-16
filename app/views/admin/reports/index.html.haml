@@ -6,7 +6,7 @@
             .medium-6.cell
                 = f.label "q[user_ids]" do 
                     Users
-                    = f.select "q[user_ids]", options_from_collection_for_select(User.all, :id, :email, params.dig(:q, :user_ids)), {:include_blank => "Select user(s)", :include_hidden => false}, :multiple => true
+                    = f.select "q[user_ids]", options_from_collection_for_select(User.without_admins, :id, :email, params.dig(:q, :user_ids)), {:include_blank => "Select user(s)", :include_hidden => false}, :multiple => true
             .medium-6.cell
                 = f.label "q[from]" do 
                     From

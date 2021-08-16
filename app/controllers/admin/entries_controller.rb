@@ -3,8 +3,8 @@ class Admin::EntriesController < ApplicationController
   before_action :set_user_ids
 
   def index
-    @pagy, @entries = pagy(Entry.where(user_id: @user_ids).search(params[:q]))
-    @users = User.all
+    @pagy, @entries = pagy(Entry.includes(:user).where(user_id: @user_ids).search(params[:q]))
+    @users = User.without_admins
   end
 
   private

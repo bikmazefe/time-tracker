@@ -23,9 +23,9 @@ class Admin::ReportsController < ApplicationController
   def set_selected_users
     user_ids_param = params.dig(:q, :user_ids)
     if user_ids_param.present? && user_ids_param.all? { |item| item.present? }
-      @selected_users = User.includes(:entries).where(id: user_ids_param)
+      @selected_users = User.where(id: user_ids_param)
     else
-      @selected_users = User.includes(:entries).all
+      @selected_users = User.without_admins
     end
   end
 end
