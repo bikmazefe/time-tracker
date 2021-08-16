@@ -82,3 +82,23 @@ table{
 .timer .cell{
     margin: 10px 0;
 }
+
+.devise-wrapper{
+    max-width: 720px;
+    margin: 100px auto 0 auto;
+    .errors{
+        h2{
+            font-size: inherit;
+        }
+    }
+    form{
+        padding: 10px;
+        .button-group{
+            margin: 10px;
+            text-align: center;
+            a, button{
+                margin: 10px;
+            }
+        }
+    }
+}

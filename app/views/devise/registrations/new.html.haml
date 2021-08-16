@@ -1,0 +1,22 @@
+.callout.devise-wrapper
+  %h2 Sign up
+  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    .callout.warning.errors 
+      = render "devise/shared/error_messages", resource: resource
+    = f.label :email do 
+      Email
+      = f.email_field :email, autofocus: true, autocomplete: "email" 
+    = f.label :password do 
+      Password
+      - if @minimum_password_length
+        %em
+          (#{@minimum_password_length} characters minimum)
+      = f.password_field :password, autocomplete: "new-password"
+
+    = f.label :password_confirmation do 
+      Password Confirmation
+      = f.password_field :password_confirmation, autocomplete: "new-password"
+    .button-group
+      = f.submit "Sign up", class: "button"
+    .button-group
+      = render "devise/shared/links"
