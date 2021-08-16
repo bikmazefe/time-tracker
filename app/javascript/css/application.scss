@@ -60,6 +60,9 @@ table{
     .flash.success::before{
         content: '✓';
     }
+    .flash.alert::before{
+        content: '×';
+    }
     
     @keyframes slideIn {
         from{
