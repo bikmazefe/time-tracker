@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :entries
+  has_many :entries, dependent: :destroy
 
   scope :without_admins, -> { where(admin: false) }
 end
