@@ -10,16 +10,16 @@
             .medium-6.cell
                 = f.label "q[from]" do 
                     From
-                    = f.date_field "q[from]"
+                    = f.date_field "q[from]", value: format_date_for_input("from")
                 = f.label "q[to]" do 
                     To
-                    = f.date_field "q[to]"
+                    = f.date_field "q[to]", value: format_date_for_input("to")
             .button-group.cell{style: "margin-top: 30px;"}
                 = f.submit "List Reports", name: nil, class: "button", data: { disable_with: false }, onClick: "changeFormat('html')", data: { disable_with: false }
                 = f.submit "Download as CSV", name: nil, class: "button success", onClick: "changeFormat('csv')", data: { disable_with: false }
                 = f.submit "Download as Excel", name: nil, class: "button success", onClick: "changeFormat('xlsx')", data: { disable_with: false }
 .table-scroll.grid-padding-y 
-    %h4= get_report_title || "Reports"
+    %h4= "Reports#{get_search_title || ""}"
     = pagy_foundation_nav(@pagy).html_safe
     %table{class: "hover"}
         %thead

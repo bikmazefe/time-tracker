@@ -14,13 +14,14 @@
             .medium-6.cell
                 = f.label "q[from]" do 
                     From
-                    = f.date_field "q[from]"
+                    = f.date_field "q[from]", value: format_date_for_input("from")
             .medium-6.cell
                 = f.label "q[to]" do 
                     To
-                    = f.date_field "q[to]"
+                    = f.date_field "q[to]", value: format_date_for_input("to")
         = f.submit "Search", name: nil, class: "button"
 .table-scroll.grid-padding-y
+    %h4= "Entries#{get_search_title || ""}"
     = pagy_foundation_nav(@pagy).html_safe
     %table{class: "hover"}
         %thead

@@ -51,6 +51,7 @@ table{
     top: 10%;
     right: 5%;
     animation:  slideIn 0.4s forwards;
+    z-index: 999;
     
     &.exit{
         animation:  slideOut 0.4s forwards;
@@ -78,15 +79,6 @@ table{
     }
 }
 
-.timer{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    div{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin: 0 20px;
-    }
+.timer .cell{
+    margin: 10px 0;
 }

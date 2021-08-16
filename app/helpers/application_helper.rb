@@ -19,14 +19,18 @@ module ApplicationHelper
     "%02d:%02d:%02d" % [hours, minutes, seconds]
   end
 
-  def get_report_title
+  def get_search_title
     from = params.dig(:q, :from)
     from_date = Date.parse(params[:q][:from]).strftime("%B %d, %Y") if from.present?
     to = params.dig(:q, :to)
     to_date = Date.parse(params[:q][:to]).strftime("%B %d, %Y") if to.present?
 
     if from_date || to_date
-      "Reports | #{from_date || "..."} - #{to_date || "..."}".html_safe
+      " | #{from_date || "..."} - #{to_date || "..."}"
     end
+  end
+
+  def format_date_for_input(param)
+    Time.parse(params[:q][param]).strftime("%Y-%m-%d") if params.dig(:q, param)
   end
 end

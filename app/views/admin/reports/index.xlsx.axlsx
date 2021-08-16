@@ -7,7 +7,7 @@ header_row = s.add_style bg_color: "04C4A7", fg_color: "FF", sz: 18, alignment: 
 
 sheet = wb.add_worksheet(name: Date.today.strftime("%B %d, %Y"))
 
-sheet.add_row [(get_report_title || "Reports"), "", "", ""], style: header_row, height: 30
+sheet.add_row [("Reports#{get_search_title}"), "", "", ""], style: header_row, height: 30
 sheet.merge_cells("A1:D1")
 sheet.add_row ["Email", "Work Entries", "Personal Entries", "Total Duration"], height: 30
 
