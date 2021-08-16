@@ -37,6 +37,8 @@ end
 
 group :test do
   gem "shoulda-matchers", "~> 5.0"
+  gem "rails-controller-testing"
+  gem "simplecov", require: false
 end
 
 group :development do
