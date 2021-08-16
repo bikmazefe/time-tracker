@@ -20,6 +20,8 @@ require("channels")
 
 require("css/application.scss")
 
+import "@fortawesome/fontawesome-free/js/all.min.js"
+
 import { Foundation } from 'foundation-sites'
 import $ from 'jquery'
 

@@ -8,13 +8,13 @@
 @include foundation-top-bar;
 @include foundation-title-bar;
 @include foundation-menu-icon;
-@include foundation-sticky;
 @include foundation-table;
 @include foundation-callout;
 @include foundation-button;
 @include foundation-xy-grid-classes;
 @include foundation-pagination;
-
+@include foundation-flex-grid;
+@include foundation-thumbnail;
 
 
 main{
@@ -105,3 +105,65 @@ table{
         }
     }
 }
+
+// $marketing-site-three-up-width: 1200px;
+
+.marketing-site-three-up {
+  text-align: center;
+  padding: 2rem 0;
+
+//   .row {
+//     max-width: $marketing-site-three-up-width;
+//   }
+
+  .columns {
+    margin-bottom: 1rem;
+
+    @media screen and (min-width: 40em) {
+      margin-bottom: 0;
+    }
+  }
+
+//   img {
+//     height: 180px;
+//     margin-bottom: 20px;
+//   }
+}
+
+$marketing-site-three-up-width: 900px;
+
+.marketing-site-three-up {
+  text-align: center;
+  padding: 2rem 0;
+
+  .row {
+    max-width: $marketing-site-three-up-width;
+  }
+
+  .columns {
+    margin-bottom: 1rem;
+
+    @media screen and (min-width: 40em) {
+      margin-bottom: 0;
+    }
+  }
+
+  h4{
+    font-weight: normal;
+  }
+
+  svg {
+      margin-bottom: 1rem;
+      color: #1679BA;
+  }
+
+  .button-group{
+      margin: 30px 0 80px 0;
+  }
+}
+
+
+.marketing-site-three-up-headline {
+  font-size: 32px;
+}
+
