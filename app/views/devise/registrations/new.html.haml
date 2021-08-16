@@ -1,8 +1,9 @@
 .callout.devise-wrapper
   %h2 Sign up
   = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-    .callout.warning.errors 
-      = render "devise/shared/error_messages", resource: resource
+    - if resource.errors.any?
+      .callout.warning.errors 
+        = render "devise/shared/error_messages", resource: resource
     = f.label :email do 
       Email
       = f.email_field :email, autofocus: true, autocomplete: "email" 
