@@ -42,7 +42,7 @@ window.addEventListener('turbolinks:load', () => {
             const minutes = Math.floor(secs / 60);
             secs -= minutes * 60;
     
-            ongoing.innerText = `00:${getAdjustedValue(minutes)}:${getAdjustedValue(secs)}`;
+            ongoing.innerText = `${getAdjustedValue(hours)}:${getAdjustedValue(minutes)}:${getAdjustedValue(secs)}`;
             diffSeconds ++;
         }, 1000)
     }

@@ -77,3 +77,16 @@ table{
         }
     }
 }
+
+.timer{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    div{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0 20px;
+    }
+}

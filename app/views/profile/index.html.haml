@@ -26,18 +26,15 @@
                 .callout.success
                     -if @ongoing
                         %h4 Ongoing Entry
-                        .grid-x.align-center-middle.text-center
-                            .cell.small-3.flex-container.flex-dir-column
-                                %strong Type:
-                                %span= @ongoing.entry_type
-                            .cell.small-3.flex-container.flex-dir-column
-                                %strong Comment:
-                                %span= @ongoing&.comment
-                            .cell.small-3.flex-container.flex-dir-column
-                                %strong Duration:
-                                #ongoing-duration{:data => {:started_at => @ongoing.started_at}}= format_duration(@ongoing.duration)
-                            .cell.small-1
-                            =link_to "Finish", finish_entry_path(@ongoing), :method => :post, class: "button" 
+                        .timer
+                            %div
+                                %strong= @ongoing.entry_type
+                            - if @ongoing.comment
+                                %div= @ongoing.comment
+                            %div 
+                                #ongoing-duration{data: {started_at: @ongoing.started_at}}= format_duration(@ongoing.duration)
+                            %div 
+                                = link_to "Finish", finish_entry_path(@ongoing), :method => :post, class: "button success" 
                     -else
                         =form_with :model => @startable_entry, :method => :post, :local => true do |f|
                             %h4 Start timer
