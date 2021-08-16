@@ -14,6 +14,7 @@ class Admin::ReportsController < ApplicationController
       end
       format.xlsx do
         response.headers["Content-Disposition"] = "attachment; filename=Report-#{Date.today}.xlsx"
+        render :template => "admin/reports/index.xlsx.axlsx"
       end
     end
   end
