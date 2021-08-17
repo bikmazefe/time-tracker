@@ -1,6 +1,7 @@
 class Admin::ReportsController < ApplicationController
-  require "csv"
+  include AuthorizeAdminConcern
   before_action :set_selected_users
+  require "csv"
 
   def index
     respond_to do |format|
