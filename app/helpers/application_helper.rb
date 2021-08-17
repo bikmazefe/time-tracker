@@ -30,7 +30,7 @@ module ApplicationHelper
     end
   end
 
-  def format_date_for_input(param)
-    Time.parse(params[:q][param]).strftime("%Y-%m-%d") if params.dig(:q, param)
+  def format_date_for_input(field)
+    Time.parse(params[:q][field]).strftime("%Y-%m-%d") if params.dig(:q, field).present?
   end
 end
