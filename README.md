@@ -32,3 +32,11 @@ rails db:create db:migrate db:seed
 ```shell
 rails s
 ```
+
+## Login Credentials
+
+Admin:
+```
+email: admin@example.com
+password: 12345678
+```
