@@ -1,25 +1,34 @@
-# README
+# Time Tracker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## What is this?
 
-Things you may want to cover:
+This is a simple time tracking app inspired by the core functionalities of Toggl. It allows users to use either the timer mode or the manual mode to enter their time entries and offers various reporting features for admins.
 
-* Ruby version
+## Install
 
-* System dependencies
+### Clone the repository
 
-* Configuration
+```shell
+git clone git@github.com:bikmazefe/time-tracker.git
+cd time-tracker
+```
 
-* Database creation
+### Install dependencies
 
-* Database initialization
+Using [Bundler](https://github.com/bundler/bundler) and [Yarn](https://github.com/yarnpkg/yarn):
 
-* How to run the test suite
+```shell
+bundle && yarn
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+### Initialize the database
 
-* Deployment instructions
+```shell
+rails db:create db:migrate db:seed
+```
 
-* ...
-# time-tracker
+## Serve
+
+```shell
+rails s
+```
