@@ -9,6 +9,14 @@ class Entry < ApplicationRecord
   scope :ongoing, -> { where(finished_at: nil) }
   scope :finished, -> { where.not(finished_at: nil) }
 
+  def start!
+    update(started_at: Time.now) unless self.started_at.present?
+  end
+
+  def finish!
+    update(finished_at: Time.now) unless self.finished_at.present?
+  end
+
   def self.search(query_param)
     if query_param
       from_date = query_param[:from].blank? ? Date.today - 10.years : Date.parse(query_param[:from])

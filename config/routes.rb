@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :reports, only: [:index]
   end
 
+  post "/entries/start", to: "entries#start", as: "start_entry"
   resources :entries, only: [:create] do
     member do
       post "/finish", to: "entries#finish", as: "finish"

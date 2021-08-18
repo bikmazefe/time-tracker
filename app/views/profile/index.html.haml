@@ -37,7 +37,7 @@
                                 .medium-2.cell 
                                     = link_to "Finish", finish_entry_path(@ongoing), :method => :post, class: "button success" 
                     -else
-                        =form_with :model => @startable_entry, :method => :post, :local => true do |f|
+                        =form_with :model => @startable_entry, url: start_entry_path, :method => :post, :local => true do |f|
                             %h4 Start timer
                             .grid-x.grid-margin-x
                                 .medium-4.cell= f.select :entry_type, options_for_select([ ["Work"], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
