@@ -17,6 +17,10 @@ class Entry < ApplicationRecord
     update(finished_at: Time.now) unless self.finished_at.present?
   end
 
+  def ongoing?
+    finished_at.blank?
+  end
+
   def self.search(query_param)
     if query_param
       from_date = query_param[:from].blank? ? Date.today - 10.years : Date.parse(query_param[:from])
@@ -45,7 +49,7 @@ class Entry < ApplicationRecord
   private
 
   def set_duration
-    if finished_at
+    if !ongoing?
       # Save duration as seconds
       self.duration = (started_at - finished_at).to_i.abs
     end
