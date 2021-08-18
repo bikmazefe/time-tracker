@@ -3,7 +3,7 @@ class Entry < ApplicationRecord
 
   belongs_to :user
 
-  validates_presence_of :started_at, :entry_type
+  validates_presence_of :entry_type
 
   scope :at_between, lambda { |from, to| finished.where(finished_at: from.beginning_of_day..to.end_of_day) }
   scope :ongoing, -> { where(finished_at: nil) }
