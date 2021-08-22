@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
 
   post "/entries/start", to: "entries#start", as: "start_entry"
-  resources :entries, only: [:create] do
+  resources :entries, only: [:create, :destroy] do
     member do
       post "/finish", to: "entries#finish", as: "finish"
     end

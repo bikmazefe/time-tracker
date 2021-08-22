@@ -39,6 +39,13 @@ class EntriesController < ApplicationController
     redirect_to profile_path
   end
 
+  def destroy
+    @entry = current_user.entries.find(params[:id])
+    @entry.destroy
+    flash[:notice] = "Entry deleted!"
+    redirect_to profile_path
+  end
+
   private
 
   def entry_params
