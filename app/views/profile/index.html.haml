@@ -8,7 +8,7 @@
                     %span= @ongoing.comment
             .small-4.cell.grid-x.align-middle.align-right
                 .small-4.cell
-                    %strong#ongoing-duration{data: {started_at: @ongoing.started_at}}= format_duration(@ongoing.calculate_duration)
+                    %strong#ongoing-duration{data: {started_at: @ongoing.started_at.iso8601}}= format_duration(@ongoing.calculate_duration)
                 .small-2.cell
                     = link_to finish_entry_path(@ongoing), :method => :post, class: "button success" do 
                         %i.fas.fa-stop
@@ -23,7 +23,6 @@
                 .small-1.cell
                     = f.button "", type: "submit", class: "button success" do 
                         %i.fas.fa-play
-
 .entries
     %h3 Entries
     = pagy_foundation_nav(@pagy).html_safe
@@ -45,7 +44,7 @@
 
 = content_for :js do
     :javascript 
-        const ongoing = document.getElementById('ongoing-duration');
+        let ongoing = document.getElementById('ongoing-duration');
         
         if(ongoing){
             const startedAt = ongoing.dataset.startedAt;
