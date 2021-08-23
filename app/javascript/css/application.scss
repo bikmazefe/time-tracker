@@ -4,27 +4,41 @@
 @include foundation-forms;
 @include foundation-typography;
 @include foundation-menu;
-@include foundation-dropdown-menu;
-@include foundation-top-bar;
-@include foundation-title-bar;
+@include foundation-dropdown;
 @include foundation-menu-icon;
 @include foundation-table;
 @include foundation-callout;
 @include foundation-button;
 @include foundation-xy-grid-classes;
-@include foundation-pagination;
+@include foundation-flex-classes;
 @include foundation-flex-grid;
+@include foundation-pagination;
 @include foundation-thumbnail;
+@include foundation-visibility-classes;
+@include foundation-accordion;
+@import "./home.scss";
+@import "./entries.scss";
+@import "./dashboard.scss";
+@import "./timer.scss";
 
 
-main{
-    max-width: 920px;
-    margin: 0 auto;
-    padding: 40px 10px 30px 10px;
+
+html{
+  --primary-background: #2C1338;
+  --purple: #E57CD8;
+  --pale-purple: #6A5B73;
+  --gold: #FFDD91;
+  --bs: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+html, body{
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
 .grid-container{
-    margin: 30px auto;
+    margin: 5rem auto;
 }
 
 .callout{
@@ -106,15 +120,10 @@ table{
     }
 }
 
-// $marketing-site-three-up-width: 1200px;
 
 .marketing-site-three-up {
   text-align: center;
   padding: 2rem 0;
-
-//   .row {
-//     max-width: $marketing-site-three-up-width;
-//   }
 
   .columns {
     margin-bottom: 1rem;
@@ -123,11 +132,6 @@ table{
       margin-bottom: 0;
     }
   }
-
-//   img {
-//     height: 180px;
-//     margin-bottom: 20px;
-//   }
 }
 
 $marketing-site-three-up-width: 900px;
@@ -154,7 +158,7 @@ $marketing-site-three-up-width: 900px;
 
   svg {
       margin-bottom: 1rem;
-      color: #1679BA;
+      color: var(--purple);
   }
 
   .button-group{
@@ -164,6 +168,5 @@ $marketing-site-three-up-width: 900px;
 
 
 .marketing-site-three-up-headline {
-  font-size: 32px;
+  margin-bottom: 3rem;
 }
-

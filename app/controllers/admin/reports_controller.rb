@@ -1,6 +1,7 @@
 class Admin::ReportsController < ApplicationController
   include AuthorizeAdminConcern
   before_action :set_selected_users
+  layout "dashboard"
   require "csv"
 
   def index

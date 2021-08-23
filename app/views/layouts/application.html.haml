@@ -1,31 +1,15 @@
-<!DOCTYPE html>
-%html(lang="en")
-    %head
-        = csrf_meta_tags
-        = csp_meta_tag
-        %meta(charset="UTF-8")/
-        %meta(name="viewport" content="width=device-width, initial-scale=1.0")/
-        %title Time Tracker
-        = favicon_link_tag "favicon.png"
-        = javascript_pack_tag "application", "data-turbolinks-track": "reload"
-        = stylesheet_pack_tag "application", media: "all", "data-turbolinks-track": "reload"
-    %body
-        = render partial: "shared/flash" 
-        .top-bar
-            .top-bar-left
-                %ul{class: "dropdown menu", data: {"dropdown-menu": true}}
-                    %li{class: "menu-text"} Time Tracker 
-                    - if current_user 
-                        - if current_user.admin?
-                            %li 
-                                %a Admin 
-                                %ul{class: "menu vertical"}
-                                    %li= link_to "Entries", admin_entries_path
-                                    %li= link_to "Reports", admin_reports_path
-                        %li= link_to "Profile", profile_path
-                        %li= link_to "Log out", destroy_user_session_path, method: :delete
-                    - else 
-                        %li= link_to "Home", root_path
-                        %li= link_to "Sign up", new_user_registration_path
-                        %li= link_to "Log in", new_user_session_path
-        %main= yield
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+    %title Time Tracker
+    = favicon_link_tag "favicon.png"
+    = javascript_pack_tag "application", "data-turbolinks-track": "reload"
+    = stylesheet_pack_tag "application", media: "all", "data-turbolinks-track": "reload"
+  %body
+    = render partial: "shared/flash"
+    %main
+      = yield

@@ -1,6 +1,7 @@
 class Admin::EntriesController < ApplicationController
   include AuthorizeAdminConcern
   before_action :set_user_ids
+  layout "dashboard"
 
   def index
     @pagy, @entries = pagy(Entry.includes(:user).where(user_id: @user_ids).search(params[:q]))

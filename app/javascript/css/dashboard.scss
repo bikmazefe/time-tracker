@@ -1,0 +1,118 @@
+.dashboard{
+    display: flex;
+    
+    aside{
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 12rem;
+        height: 100vh;
+        padding: 1rem 0.5rem;
+        background-color: var(--primary-background);
+        position: relative;
+        font-size: 14px;
+        color: rgb(253, 229, 220);
+        .logo{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem auto;
+            h2{              
+                font-size: 16px;
+                margin-left: 0.5rem;
+            }
+        }
+        .menu{ 
+            border-top: 1px solid var(--pale-purple);
+            padding: 1rem 0;
+
+            &:first-of-type{
+                margin-top: 5rem;
+            }
+
+
+            li {
+                padding: 0.2rem;
+                margin: 0.2rem auto;
+                text-align: left;
+                width: 90%;
+                a { 
+                    color: inherit;
+                    svg{
+                        margin-right: 0.3rem;
+                    }
+
+                    &:hover{
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .user {
+            margin: auto 0 1rem 0;
+            color: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 1rem;
+            transition: 0.3s all ease-in-out;
+            img{
+                border-radius: 100%;
+            }
+
+            &:hover{
+                background-color: lighten(#2C1338, 10%);
+                cursor: pointer;
+            }
+        }
+
+        .dropdown-pane{
+            color: initial;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: var(--bs);
+            border-radius: 0.5rem;
+            span:first-of-type{
+                font-weight: 500;
+                color: var(--purple);
+            }
+        }
+    }
+
+    .content{
+        width: 100%;
+        background-color: #FEF9F8;
+        h2{
+            margin: 1rem;
+        }
+    }
+
+    @media screen and (max-width: 39.9375em){
+        aside{
+            max-width: 3rem;
+            padding: 0;
+            align-items: center;
+            .logo h2{
+                display: none;
+            }
+            li { 
+                text-align: center;
+                svg{
+                    margin: 0;
+                }
+                span{
+                    display: none;
+                }
+            }
+
+            .user{
+                span{
+                    display: none;
+                }
+            }
+        }
+    }
+}

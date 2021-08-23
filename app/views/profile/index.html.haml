@@ -1,67 +1,140 @@
-%h2 Profile
-.grid-container
-    .grid-x
-        - if params[:mode] == "manual"
-            .cell
-                .callout.primary
-                    %h4 Add entry manually
-                    =form_with model: @manual_entry,  method: :post, local: true do |f|
-                        =f.label :started_at  do
-                            Started at
-                            = f.datetime_field :started_at
-                        =f.label :finish_time do
-                            Finished at
-                            = f.time_field :finish_time
-                        =f.label :entry_type do
-                            Entry type 
-                            = f.select :entry_type, options_for_select([ ['Work'], ['Personal'] ]), {prompt: "Please Select..."}, required: true
-                        =f.label :comment do
-                            Comment
-                            = f.text_field :comment
-                        =f.submit "Create", class: "button"
-            .cell.text-right
-                = link_to "🕐 Switch to timer mode", profile_path, class: "clear button"
-        - else 
-            .cell.ongoing
-                .callout.success
-                    -if @ongoing
-                        %h4 Ongoing Entry
-                        .grid-container
-                            .timer.grid-x.grid-margin-x.grid-padding-x
-                                .medium-2.cell
-                                    %strong= @ongoing.entry_type
-                                - if @ongoing.comment
-                                    .medium-3.cell= @ongoing.comment
-                                .medium-2.cell
-                                    #ongoing-duration{data: {started_at: @ongoing.started_at}}= format_duration(@ongoing.duration)
-                                .medium-2.cell 
-                                    = link_to "Finish", finish_entry_path(@ongoing), :method => :post, class: "button success" 
-                    -else
-                        =form_with :model => @startable_entry, url: start_entry_path, :method => :post, :local => true do |f|
-                            %h4 Start timer
-                            .grid-x.grid-margin-x
-                                .medium-4.cell= f.select :entry_type, options_for_select([ ["Work"], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
-                                .medium-4.cell= f.text_field :comment, placeholder: "Your comment...", required: true
-                                .medium-4.cell= f.submit "Start", class: "button success"
-            -if !@ongoing
-                .cell.text-right
-                    = link_to "📋 Switch to manual mode", profile_path(mode: "manual"), class: "clear button"
-.table-scroll.grid-padding-y
+.timer
+    - if @ongoing 
+        .grid-x.align-middle.align-justify
+            .small-4.cell.grid-x.text-center
+                .medium-4.cell    
+                    %strong= @ongoing.entry_type
+                .medium-4.cell    
+                    %span= @ongoing.comment
+            .small-4.cell.grid-x.align-middle.align-right
+                .small-4.cell
+                    %strong#ongoing-duration{data: {started_at: @ongoing.started_at}}= format_duration(@ongoing.calculate_duration)
+                .small-2.cell
+                    = link_to finish_entry_path(@ongoing), :method => :post, class: "button success" do 
+                        %i.fas.fa-stop
+    - else 
+        =form_with :model => @startable_entry, url: start_entry_path, :method => :post, :local => true do |f|
+            .grid-x.align-middle.align-justify
+                .medium-6.cell.grid-x
+                    .cell.medium-4
+                        = f.select :entry_type, options_for_select([ ["Work"], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
+                    .cell.medium-4
+                        = f.text_field :comment, placeholder: "Your comment...", required: true
+                .small-1.cell
+                    = f.button "", type: "submit", class: "button success" do 
+                        %i.fas.fa-play
+
+.entries
+    %h3 Entries
     = pagy_foundation_nav(@pagy).html_safe
-    %table{class: "hover"}
-        %thead
-            %tr
-                %th{width: "150"} Type
-                %th{width: "200"} Comment
-                %th{width: "200"} Duration
-                %th{width: "300"} Started
-                %th{width: "300"} Finished
-        %tbody
-            - @finished_entries.each do |entry|
-                %tr
-                    %td= entry.entry_type
-                    %td= entry&.comment 
-                    %td= format_duration(entry.duration)
-                    %td= format_date(entry.started_at) 
-                    %td= format_date(entry.finished_at) 
-    %p{class: "text-center"}= "You don't have any entries." if !@finished_entries.any?
+    %ul.accordion{"data-accordion" => true}
+        - @finished_entries.group_by { |ent| ent.started_at.strftime("%e %b %Y") }.each do |date, entries|
+            %li.accordion-item{"data-accordion-item" => true}
+                %a.accordion-title{href: "#"}= date
+                .accordion-content{"data-tab-content" => true}
+                    - entries.each do |entry|
+                        .grid-x.align-middle.align-spaced.entry 
+                            .small-4.cell 
+                                %strong= format_date_short(entry.started_at)
+                                %span.entry-type= entry.entry_type
+                                %span.hide-for-small-only= entry&.comment
+                            .small-4.cell.text-right
+                                %strong= format_duration(entry.duration)
+                                = link_to entry_path(entry), method: :delete, data: {confirm: "Are you sure to delete this entry?"} do 
+                                    %i.fas.fa-trash-alt
+
+= content_for :js do
+    :javascript 
+        const ongoing = document.getElementById('ongoing-duration');
+        
+        if(ongoing){
+            const startedAt = ongoing.dataset.startedAt;
+            const currentDuration = Math.abs(new Date - Date.parse(startedAt));
+            let diffSeconds = Math.ceil(currentDuration / 1000);
+
+            setInterval(() => {
+                let secs = diffSeconds;
+        
+                const hours = Math.floor(secs / 3600);
+                secs -= hours * 3600;
+        
+                const minutes = Math.floor(secs / 60);
+                secs -= minutes * 60;
+        
+                ongoing.innerText = `${getAdjustedValue(hours)}:${getAdjustedValue(minutes)}:${getAdjustedValue(secs)}`;
+                diffSeconds ++;
+            }, 1000)
+        }
+        
+        function getAdjustedValue(val) {
+            return val < 10 ? '0' + val : val;
+        }
+                
+-# .grid-container
+-#     .grid-x
+-#         - if params[:mode] == "manual"
+-#             .cell
+-#                 .callout.primary
+-#                     %h4 Add entry manually
+-#                     =form_with model: @manual_entry,  method: :post, local: true do |f|
+-#                         =f.label :started_at  do
+-#                             Started at
+-#                             = f.datetime_field :started_at
+-#                         =f.label :finish_time do
+-#                             Finished at
+-#                             = f.time_field :finish_time
+-#                         =f.label :entry_type do
+-#                             Entry type 
+-#                             = f.select :entry_type, options_for_select([ ['Work'], ['Personal'] ]), {prompt: "Please Select..."}, required: true
+-#                         =f.label :comment do
+-#                             Comment
+-#                             = f.text_field :comment
+-#                         =f.submit "Create", class: "button"
+-#             .cell.text-right
+-#                 = link_to "🕐 Switch to timer mode", profile_path, class: "clear button"
+-#         - else 
+-#             .cell.ongoing
+-#                 .callout.success
+-#                     -if @ongoing
+-#                         %h4 Ongoing Entry
+-#                         .grid-container
+-#                             .timer.grid-x.grid-margin-x.grid-padding-x
+-#                                 .medium-2.cell
+-#                                     %strong= @ongoing.entry_type
+-#                                 - if @ongoing.comment
+-#                                     .medium-3.cell= @ongoing.comment
+-#                                 .medium-2.cell
+-#                                     #ongoing-duration{data: {started_at: @ongoing.started_at}}= format_duration(@ongoing.duration)
+-#                                 .medium-2.cell 
+-#                                     = link_to "Finish", finish_entry_path(@ongoing), :method => :post, class: "button success" 
+-#                     -else
+-#                         =form_with :model => @startable_entry, url: start_entry_path, :method => :post, :local => true do |f|
+-#                             %h4 Start timer
+-#                             .grid-x.grid-margin-x
+-#                                 .medium-4.cell= f.select :entry_type, options_for_select([ ["Work"], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
+-#                                 .medium-4.cell= f.text_field :comment, placeholder: "Your comment...", required: true
+-#                                 .medium-4.cell= f.submit "Start", class: "button success"
+-#             -if !@ongoing
+-#                 .cell.text-right
+-#                     = link_to "📋 Switch to manual mode", profile_path(mode: "manual"), class: "clear button"
+
+
+-# .table-scroll.grid-padding-y
+-#     = pagy_foundation_nav(@pagy).html_safe
+-#     %table{class: "hover"}
+-#         %thead
+-#             %tr
+-#                 %th{width: "150"} Type
+-#                 %th{width: "200"} Comment
+-#                 %th{width: "200"} Duration
+-#                 %th{width: "300"} Started
+-#                 %th{width: "300"} Finished
+-#         %tbody
+-#             - @finished_entries.each do |entry|
+-#                 %tr
+-#                     %td= entry.entry_type
+-#                     %td= entry&.comment 
+-#                     %td= format_duration(entry.duration)
+-#                     %td= format_date(entry.started_at) 
+-#                     %td= format_date(entry.finished_at) 
+-#     %p{class: "text-center"}= "You don't have any entries." if !@finished_entries.any?

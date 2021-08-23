@@ -1,0 +1,48 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    %meta{content: "width=device-width, initial-scale=1.0", name: "viewport"}/
+    %title Dashboard | Time Tracker
+    = favicon_link_tag "favicon.png"
+    = javascript_pack_tag "application", "data-turbolinks-track": "reload"
+    = stylesheet_pack_tag "application", media: "all", "data-turbolinks-track": "reload"
+  %body
+    = render partial: "shared/flash"
+    .dashboard
+      %aside
+        .logo
+          = image_tag "logo.png", size: "25x25"
+          %h2 Time Tracker
+        %ul.vertical.menu
+          %li
+            = link_to profile_path do
+              %i.fas.fa-user
+              %span Profile
+          %li
+            = link_to "#" do
+              %i.fas.fa-calendar
+              %span Calendar
+        - if current_user.admin?
+          %ul.vertical.menu
+            %li
+              = link_to admin_entries_path do
+                %i.fas.fa-list
+                %span Entries
+            %li
+              = link_to admin_reports_path do
+                %i.fas.fa-file-alt
+                %span Reports
+        %button.user{"data-toggle" => "user-dropdown", type: "button"}
+          = image_tag "placeholder.png", size: "30x30"
+          %span= current_user.email.truncate(10)
+        #user-dropdown.dropdown-pane.right{"data-dropdown" => ""}
+          %span= current_user.admin? ? "Admin": "User"
+          %span= current_user.email
+          = link_to destroy_user_session_path, method: :delete do
+            %i.fas.fa-sign-out-alt
+      .content
+        = yield
+      = yield :js

@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
   before_action :authenticate_user!
+  layout "dashboard"
 
   def index
     @manual_entry = Entry.new

@@ -5,6 +5,10 @@ module ApplicationHelper
     date.in_time_zone("Istanbul").strftime("%B %e, %Y %H:%M:%S")
   end
 
+  def format_date_short(date)
+    date.strftime("%a, %b %e")
+  end
+
   def format_duration(duration)
     seconds_diff = duration
 

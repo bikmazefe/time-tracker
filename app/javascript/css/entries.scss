@@ -1,0 +1,38 @@
+.entries{
+    margin-top: 5rem;
+    padding: 1rem;
+    h3{
+        margin: 1rem;
+    }
+
+    .accordion-title{
+        font-size: inherit;
+        font-weight: 500;
+        color: var(--pale-purple);
+    }
+    .entry{
+        width: 100%;
+        margin: 1rem 0;
+        padding: 1rem;
+        background-color: white;
+        box-shadow: var(--bs);
+
+        span{
+            margin-left: 2rem;
+        }
+
+        .entry-type{
+            font-weight: 500;
+            color: var(--purple);
+        }
+
+        a{  
+            margin-left: 1rem;
+            color: lightgrey;
+            transition: 0.2s all ease-in-out;
+            &:hover{
+                color: var(--purple);
+            }
+        }
+    }
+}

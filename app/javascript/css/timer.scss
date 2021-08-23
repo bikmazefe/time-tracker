@@ -1,0 +1,25 @@
+.timer{
+    width: 100%;
+    min-height: 4rem;
+    background-color: white;
+    box-shadow: var(--bs);
+    padding: 0 1rem;
+    input, select{
+        margin: 0;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        font-weight: 500;
+        color: var(--pale-purple);
+        &:focus{
+            border: none;
+            box-shadow: none;
+        }
+    }
+    .button.success{
+        color: white;
+        margin: auto;
+        border-radius: 100%;
+        background-color: var(--purple);
+    }
+}
