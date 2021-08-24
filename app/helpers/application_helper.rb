@@ -5,6 +5,10 @@ module ApplicationHelper
     date.strftime("%a, %b %e")
   end
 
+  def date_to_iso(date)
+    date.iso8601
+  end
+
   def format_duration(duration)
     seconds_diff = duration
 
