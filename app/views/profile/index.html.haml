@@ -1,10 +1,14 @@
 - if params[:mode] == "manual"
-    =form_with model: @manual_entry,  method: :post, local: true do |f|
+    =form_with model: @new_manual_entry,  method: :post, local: true do |f|
         .manual
             %h3 Manual Entry
-            = f.datetime_field :started_at
-            = f.time_field :finish_time, placeholder: "Finished at"
+            = f.label :started_at
+            = f.datetime_field :started_at, min: Date.today, required: true
+            = f.label :finish_time
+            = f.time_field :finish_time, required: true
+            = f.label :entry_type
             = f.select :entry_type, options_for_select([ ['Work'], ['Personal'] ]), {prompt: "Select Type..."}, required: true
+            = f.label :comment
             = f.text_field :comment, placeholder: "Comment"
             = f.submit "Create", class: "button"
             .mode-switch
@@ -13,19 +17,18 @@
     .timer
         - if @ongoing 
             .grid-x.align-middle.align-justify
-                .small-4.cell.grid-x.text-center
-                    .medium-4.cell    
-                        %strong= @ongoing.entry_type
-                    .medium-4.cell    
-                        %span= @ongoing.comment
-                .small-6.cell.grid-x.align-middle.align-right
-                    .small-4.cell
+                .auto.cell
+                    %span
+                        %strong= @ongoing.entry_type   
+                    %span= @ongoing.comment
+                .auto.cell.text-right
+                    %span 
                         %strong#ongoing-duration{data: {started_at: @ongoing.started_at.iso8601}}= format_duration(@ongoing.calculate_duration)
-                    .small-2.cell
+                    %span
                         = link_to finish_entry_path(@ongoing), :method => :post, class: "button success" do 
                             %i.fas.fa-stop
         - else 
-            =form_with :model => @startable_entry, url: start_entry_path, :method => :post, :local => true do |f|
+            =form_with :model => @new_timer_entry, url: start_entry_path, :method => :post, :local => true do |f|
                 .grid-x.align-middle.align-justify
                     .medium-6.cell.grid-x
                         .cell.medium-4
@@ -46,11 +49,10 @@
                 %a.accordion-title{href: "#"}= date
                 .accordion-content{"data-tab-content" => true}
                     - entries.each do |entry|
-                        .grid-x.align-middle.align-spaced.entry 
-                            .small-4.cell 
-                                %strong= format_date_short(entry.started_at)
+                        .grid-x.align-middle.align-justify.entry 
+                            .auto.cell
                                 %span.entry-type= entry.entry_type
-                                %span.hide-for-small-only= entry&.comment
+                                %span= entry&.comment
                             .small-4.cell.text-right
                                 %strong= format_duration(entry.duration)
                                 = link_to entry_path(entry), method: :delete, data: {confirm: "Are you sure to delete this entry?"} do 

@@ -1,10 +1,6 @@
 module ApplicationHelper
   include Pagy::Frontend
 
-  def format_date(date)
-    date.in_time_zone("Istanbul").strftime("%B %e, %Y %H:%M:%S")
-  end
-
   def format_date_short(date)
     date.strftime("%a, %b %e")
   end

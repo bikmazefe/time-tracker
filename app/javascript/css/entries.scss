@@ -1,6 +1,7 @@
 .entries{
-    margin-top: 5rem;
+    margin: 5rem auto 0 auto;
     padding: 1rem;
+    max-width: 1000px;
     h3{
         margin: 1rem;
     }
@@ -9,6 +10,7 @@
         font-size: inherit;
         font-weight: 500;
         color: var(--pale-purple);
+        box-shadow: var(--bs);
     }
     .entry{
         width: 100%;

@@ -3,12 +3,12 @@
     min-height: 4rem;
     background-color: white;
     box-shadow: var(--bs);
-    padding: 0 1rem;
+    padding: 0 1.5rem;
     position: relative;    
     .button{
-        color: white;
         &.success{
-            margin: auto;
+            color: white;
+            margin: auto 0.5rem;
             border-radius: 100%;
             background-color: var(--purple);
         }
@@ -21,10 +21,14 @@
         font-weight: 500;
         color: var(--pale-purple);
     }
+
+    span{
+        margin: 0 0.5rem;
+    }
     
     .mode-switch{
         position: absolute;
-        top: 110%;
+        top: 120%;
         right: 2rem;
     }
 }
@@ -39,5 +43,11 @@
     border-radius: 1rem;
     .mode-switch{
         text-align: right;
+    }
+
+    .time-select{
+        display: flex;
+        flex-direction: row;
+        width: 14rem;
     }
 }
