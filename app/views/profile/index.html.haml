@@ -1,45 +1,8 @@
 - if params[:mode] == "manual"
-    =form_with model: @new_manual_entry,  method: :post, local: true do |f|
-        .manual
-            %h3 Manual Entry
-            = f.label :started_at
-            = f.datetime_field :started_at, min: Date.today, required: true
-            = f.label :finish_time
-            = f.time_field :finish_time, required: true
-            = f.label :entry_type
-            = f.select :entry_type, options_for_select([ ['Work'], ['Personal'] ]), {prompt: "Select Type..."}, required: true
-            = f.label :comment
-            = f.text_field :comment, placeholder: "Comment"
-            = f.submit "Create", class: "button"
-            .mode-switch
-                = link_to "🕐 Switch to timer mode", profile_path
+    = render partial: "manual", locals: {new_manual_entry: @new_manual_entry}
 - else     
-    .timer
-        - if @ongoing 
-            .grid-x.align-middle.align-justify
-                .auto.cell
-                    %span
-                        %strong= @ongoing.entry_type   
-                    %span= @ongoing.comment
-                .auto.cell.text-right
-                    %span 
-                        %strong#ongoing-duration{data: {started_at: @ongoing.started_at.iso8601}}= format_duration(@ongoing.calculate_duration)
-                    %span
-                        = link_to finish_entry_path(@ongoing), :method => :post, class: "button success" do 
-                            %i.fas.fa-stop
-        - else 
-            =form_with :model => @new_timer_entry, url: start_entry_path, :method => :post, :local => true do |f|
-                .grid-x.align-middle.align-justify
-                    .medium-6.cell.grid-x
-                        .cell.medium-4
-                            = f.select :entry_type, options_for_select([ ["Work"], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
-                        .cell.medium-4
-                            = f.text_field :comment, placeholder: "Your comment...", required: true
-                    .small-1.cell
-                        = f.button "", type: "submit", class: "button success" do 
-                            %i.fas.fa-play
-                    .mode-switch.text-right
-                        = link_to "📋 Switch to manual mode", profile_path(mode: "manual")
+    = render partial: "timer", locals: {new_timer_entry: @new_timer_entry, ongoing: @ongoing}
+
 .entries
     %h3 Entries
     = pagy_foundation_nav(@pagy).html_safe
