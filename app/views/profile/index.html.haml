@@ -1,28 +1,42 @@
-.timer
-    - if @ongoing 
-        .grid-x.align-middle.align-justify
-            .small-4.cell.grid-x.text-center
-                .medium-4.cell    
-                    %strong= @ongoing.entry_type
-                .medium-4.cell    
-                    %span= @ongoing.comment
-            .small-4.cell.grid-x.align-middle.align-right
-                .small-4.cell
-                    %strong#ongoing-duration{data: {started_at: @ongoing.started_at.iso8601}}= format_duration(@ongoing.calculate_duration)
-                .small-2.cell
-                    = link_to finish_entry_path(@ongoing), :method => :post, class: "button success" do 
-                        %i.fas.fa-stop
-    - else 
-        =form_with :model => @startable_entry, url: start_entry_path, :method => :post, :local => true do |f|
+- if params[:mode] == "manual"
+    =form_with model: @manual_entry,  method: :post, local: true do |f|
+        .manual
+            %h3 Manual Entry
+            = f.datetime_field :started_at
+            = f.time_field :finish_time, placeholder: "Finished at"
+            = f.select :entry_type, options_for_select([ ['Work'], ['Personal'] ]), {prompt: "Select Type..."}, required: true
+            = f.text_field :comment, placeholder: "Comment"
+            = f.submit "Create", class: "button"
+            .mode-switch
+                = link_to "🕐 Switch to timer mode", profile_path
+- else     
+    .timer
+        - if @ongoing 
             .grid-x.align-middle.align-justify
-                .medium-6.cell.grid-x
-                    .cell.medium-4
-                        = f.select :entry_type, options_for_select([ ["Work"], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
-                    .cell.medium-4
-                        = f.text_field :comment, placeholder: "Your comment...", required: true
-                .small-1.cell
-                    = f.button "", type: "submit", class: "button success" do 
-                        %i.fas.fa-play
+                .small-4.cell.grid-x.text-center
+                    .medium-4.cell    
+                        %strong= @ongoing.entry_type
+                    .medium-4.cell    
+                        %span= @ongoing.comment
+                .small-6.cell.grid-x.align-middle.align-right
+                    .small-4.cell
+                        %strong#ongoing-duration{data: {started_at: @ongoing.started_at.iso8601}}= format_duration(@ongoing.calculate_duration)
+                    .small-2.cell
+                        = link_to finish_entry_path(@ongoing), :method => :post, class: "button success" do 
+                            %i.fas.fa-stop
+        - else 
+            =form_with :model => @startable_entry, url: start_entry_path, :method => :post, :local => true do |f|
+                .grid-x.align-middle.align-justify
+                    .medium-6.cell.grid-x
+                        .cell.medium-4
+                            = f.select :entry_type, options_for_select([ ["Work"], ['Personal'] ]), {prompt: "Select entry type..."}, required: true
+                        .cell.medium-4
+                            = f.text_field :comment, placeholder: "Your comment...", required: true
+                    .small-1.cell
+                        = f.button "", type: "submit", class: "button success" do 
+                            %i.fas.fa-play
+                    .mode-switch.text-right
+                        = link_to "📋 Switch to manual mode", profile_path(mode: "manual")
 .entries
     %h3 Entries
     = pagy_foundation_nav(@pagy).html_safe
