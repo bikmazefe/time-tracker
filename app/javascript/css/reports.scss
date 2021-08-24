@@ -1,0 +1,15 @@
+.reports{
+    padding: 1rem;
+    max-width: 1000px;
+    margin: 2rem auto;
+    .search-form{
+        background-color: white;
+        padding: 1rem;
+        box-shadow: var(--bs);
+        border-radius: 1rem;
+    }
+
+    .table-scroll{
+        margin-top: 5rem;
+    }
+}

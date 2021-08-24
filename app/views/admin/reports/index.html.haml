@@ -1,8 +1,6 @@
-%h2 User Reports
-= form_with url: admin_reports_path, local: true, method: :get do |f|
-    .callout.primary
-        %h4 Generate Reports
-        .grid-x.grid-padding-x
+.reports
+    = form_with url: admin_reports_path, local: true, method: :get do |f|
+        .grid-x.grid-padding-x.align-middle.align.center.search-form
             .medium-6.cell
                 = f.label "q[user_ids]" do 
                     Users
@@ -16,34 +14,32 @@
                     = f.date_field "q[to]", value: format_date_for_input("to")
             .button-group.cell{style: "margin-top: 30px;"}
                 = f.submit "List Reports", name: nil, class: "button", data: { disable_with: false }, onClick: "changeFormat('html')", data: { disable_with: false }
-                = f.submit "Download as CSV", name: nil, class: "button success", onClick: "changeFormat('csv')", data: { disable_with: false }
-                = f.submit "Download as Excel", name: nil, class: "button success", onClick: "changeFormat('xlsx')", data: { disable_with: false }
-.table-scroll.grid-padding-y 
-    %h4= "Reports#{get_search_title || ""}"
-    = pagy_foundation_nav(@pagy).html_safe
-    %table{class: "hover"}
-        %thead
-            %tr
-                %th{width: "150"} Email
-                %th{width: "200"} Work Entries
-                %th{width: "200"} Personal Entries
-                %th{width: "200"} Total Entries
-                %th{width: "300"} Total Duration
-        %tbody
-            - @users.each do |user|
+                = f.submit "to CSV", name: nil, class: "button success", onClick: "changeFormat('csv')", data: { disable_with: false }
+                = f.submit "to Excel", name: nil, class: "button success", onClick: "changeFormat('xlsx')", data: { disable_with: false }
+    .table-scroll
+        %h4= "Reports#{get_search_title || ""}"
+        = pagy_foundation_nav(@pagy).html_safe
+        %table{class: "hover"}
+            %thead
                 %tr
-                    - user_entries = user.entries.search(params[:q])
-                    %td= user.email
-                    %td= user_entries.count_by_type("Work")
-                    %td= user_entries.count_by_type("Personal")
-                    %td= user_entries.size
-                    %td= format_duration(user_entries.total_duration)
-    %p{class: "text-center"}= "No report found." if !@users.any?
+                    %th{width: "150"} Email
+                    %th{width: "200"} Work Entries
+                    %th{width: "200"} Personal Entries
+                    %th{width: "200"} Total Entries
+                    %th{width: "300"} Total Duration
+            %tbody
+                - @users.each do |user|
+                    %tr
+                        - user_entries = user.entries.search(params[:q])
+                        %td= user.email
+                        %td= user_entries.count_by_type("Work")
+                        %td= user_entries.count_by_type("Personal")
+                        %td= user_entries.size
+                        %td= format_duration(user_entries.total_duration)
+        %p{class: "text-center"}= "No report found." if !@users.any?
 
-:javascript 
-    function changeFormat(format){
-        document.querySelector('form').setAttribute('action', `/admin/reports.${format}`)
-    }
-
-
-
+= content_for :js do 
+    :javascript 
+        function changeFormat(format){
+            document.querySelector('form').setAttribute('action', `/admin/reports.${format}`)
+        }

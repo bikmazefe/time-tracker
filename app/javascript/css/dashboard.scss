@@ -1,15 +1,14 @@
 .dashboard{
     display: flex;
-    
     aside{
         display: flex;
         flex-direction: column;
         align-items: stretch;
         width: 12rem;
         height: 100vh;
+        position: fixed;
         padding: 1rem 0.5rem;
         background-color: var(--primary-background);
-        position: relative;
         font-size: 14px;
         color: rgb(253, 229, 220);
         .logo{
@@ -84,7 +83,8 @@
 
     .content{
         width: 100%;
-        background-color: #FEF9F8;
+        margin-left: 12rem;
+       overflow: auto;
         h2{
             margin: 1rem;
         }
@@ -97,6 +97,9 @@
             align-items: center;
             .logo h2{
                 display: none;
+            }
+            ul{
+                max-width: 100%;
             }
             li { 
                 text-align: center;
@@ -113,6 +116,9 @@
                     display: none;
                 }
             }
+        }
+        .content{
+            margin-left: 3rem;
         }
     }
 }
