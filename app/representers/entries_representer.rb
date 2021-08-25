@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EntriesRepresenter
   def initialize(entries)
     @entries = entries

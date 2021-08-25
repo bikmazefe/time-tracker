@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Entry < ApplicationRecord
   before_save :set_duration
 
@@ -5,16 +7,16 @@ class Entry < ApplicationRecord
 
   validates_presence_of :entry_type
 
-  scope :at_between, lambda { |from, to| finished.where(finished_at: from.beginning_of_day..to.end_of_day) }
+  scope :at_between, ->(from, to) { finished.where(finished_at: from.beginning_of_day..to.end_of_day) }
   scope :ongoing, -> { where(finished_at: nil) }
   scope :finished, -> { where.not(finished_at: nil) }
 
   def start!
-    update(started_at: Time.now) unless self.started_at.present?
+    update(started_at: Time.now) unless started_at.present?
   end
 
   def finish!
-    update(finished_at: Time.now) unless self.finished_at.present?
+    update(finished_at: Time.now) unless finished_at.present?
   end
 
   def ongoing?
@@ -57,8 +59,6 @@ class Entry < ApplicationRecord
   private
 
   def set_duration
-    if !ongoing?
-      self.duration = calculate_duration
-    end
+    self.duration = calculate_duration unless ongoing?
   end
 end
