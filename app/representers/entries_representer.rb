@@ -7,10 +7,15 @@ class EntriesRepresenter
     @entries.map do |entry|
       {
         title: entry.entry_type,
-        start: entry.started_at.iso8601,
-        start: entry.finished_at.iso8601,
-        fullDay: false,
+        start: date_to_iso(entry.started_at),
+        end: date_to_iso(entry.finished_at),
       }
     end
+  end
+
+  private
+
+  def date_to_iso(date)
+    date.iso8601
   end
 end
