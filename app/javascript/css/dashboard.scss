@@ -125,4 +125,14 @@
 #calendar {
     max-width: 900px;
     margin: 3rem auto;
+
+    #loader{
+        width: 100%;
+        margin-top: 40%;
+        text-align: center;
+        opacity: 0.6;
+        svg{
+            color: var(--pale-purple);
+        }
+    }
   }

@@ -2,8 +2,9 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import "@fullcalendar/common/main.min.css";
 
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
+window.addEventListener('turbolinks:load', function() {
+    const calendarEl = document.getElementById('calendar');
+    const loader = document.getElementById('loader');
     let entries = [];
 
     fetch('/profile/calendar.json')
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     hourCycle: 'h23',
                 }
             });
+        loader.style.display = 'none';
         calendar.render();
     }
   });
