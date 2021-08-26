@@ -54,9 +54,13 @@ class EntriesController < ApplicationController
 
   def set_start_and_finish
     @entry.started_at = Time.parse(entry_params[:started_at])
-    #we append the finish_time to started_at date object and set it as the finished_at date
-    hour, min = entry_params[:finish_time].split(":")
-    @entry.finished_at = Time.parse(entry_params[:started_at]).change({ hour: hour, min: min })
+    finish_time = Time.parse(entry_params[:finish_time])
+
+    if finish_time < @entry.started_at
+      @entry.finished_at = finish_time + 1.day
+    else
+      @entry.finished_at = finish_time
+    end
   end
 
   def set_ongoing

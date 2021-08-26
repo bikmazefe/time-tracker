@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   include Pagy::Frontend
 
@@ -7,6 +9,12 @@ module ApplicationHelper
 
   def date_to_iso(date)
     date.iso8601
+  end
+
+  def get_entry_range(entry)
+    formatted_time = ->(date) { date.in_time_zone("Istanbul").strftime("%H:%M") }
+
+    "#{formatted_time.call(entry.started_at)} - #{formatted_time.call(entry.finished_at)}"
   end
 
   def format_duration(duration)
