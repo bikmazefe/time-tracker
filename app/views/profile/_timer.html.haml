@@ -1,4 +1,4 @@
-.timer
+.timer{data: { controller: "timer" }}
     - if @ongoing 
         .grid-x.align-middle.align-justify
             .auto.cell
@@ -7,7 +7,7 @@
                 %span= @ongoing.comment
             .auto.cell.text-right
                 %span 
-                    %strong#ongoing-duration{data: {started_at: @ongoing.started_at.iso8601}}= format_duration(@ongoing.calculate_duration)
+                    %strong#ongoing-duration{data: {"started-at": @ongoing.started_at.iso8601, "timer-target": "ongoing"}}= format_duration(@ongoing.calculate_duration)
                 %span
                     = link_to finish_entry_path(@ongoing), :method => :post, class: "button success" do 
                         %i.fas.fa-stop

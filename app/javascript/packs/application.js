@@ -18,14 +18,12 @@ require("channels")
 require("css/application.scss")
 
 import "@fortawesome/fontawesome-free/js/all.min.js"
-import 'foundation-sites/dist/js/foundation.min.js'
-import $ from 'jquery'
-
-
-import '../src/js/calendar';
-import '../src/js/timer';
-import '../src/js/manual';
+import { Foundation } from 'foundation-sites';
+import $ from 'jquery';
+import "controllers"
 import '../src/js/hideFlash';
 
 
+
 $(document).on('ready turbolinks:load', () => $(document).foundation());
+

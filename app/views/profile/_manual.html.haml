@@ -1,10 +1,10 @@
 =form_with model: new_manual_entry,  method: :post, local: true do |f|
-    .manual
+    .manual{data: {controller: "flatpickr"}}
         %h3 Manual Mode
         = f.label :started_at
-        = f.datetime_field :started_at, required: true
+        = f.datetime_field :started_at, required: true, data: {"flatpickr-target": "picker", "enable-time": true, "default-date": Time.now, "min-date": "today"}
         = f.label :finish_time
-        = f.time_field :finish_time, required: true
+        = f.time_field :finish_time, required: true, data: {"flatpickr-target": "picker", "no-calendar": true, "enable-time": true, "default-date": Time.now }
         = f.label :entry_type
         = f.select :entry_type, options_for_select([ ['Work'], ['Personal'] ]), {prompt: "Select Type..."}, required: true
         = f.label :comment
