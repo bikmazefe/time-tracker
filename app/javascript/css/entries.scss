@@ -5,7 +5,6 @@
     h3{
         margin: 1rem;
     }
-
     .accordion-title{
         font-size: inherit;
         font-weight: 500;
@@ -18,16 +17,18 @@
         padding: 1rem;
         background-color: white;
         box-shadow: var(--bs);
-
+        overflow: visible;
         span{
-            margin-left: 2rem;
+            margin: 0 1rem;
         }
-
         .entry-type{
             font-weight: 500;
             color: var(--purple);
         }
-
+        .entry-range{
+            font-weight: 500;
+            color: var(--pale-purple);
+        }
         a{  
             margin-left: 1rem;
             color: lightgrey;

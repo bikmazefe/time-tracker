@@ -15,27 +15,17 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-
-
 require("css/application.scss")
 
 import "@fortawesome/fontawesome-free/js/all.min.js"
-
 import 'foundation-sites/dist/js/foundation.min.js'
 import $ from 'jquery'
 
+
+import '../src/js/calendar';
+import '../src/js/timer';
+import '../src/js/manual';
+import '../src/js/hideFlash';
+
+
 $(document).on('ready turbolinks:load', () => $(document).foundation());
-
-
-// Hide flash after 5 seconds.
-function hideFlash() {
-  setInterval(function() {
-    let flashWrapper = document.querySelector('.flash-wrapper');
-    if(flashWrapper){
-      flashWrapper.classList.add('exit');
-      setTimeout(() => flashWrapper.style.display = 'none', 500);
-    }
-  }, 5000);
-}
-    
-hideFlash();

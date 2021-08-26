@@ -13,7 +13,6 @@
 @include foundation-flex-classes;
 @include foundation-flex-grid;
 @include foundation-pagination;
-@include foundation-thumbnail;
 @include foundation-visibility-classes;
 @include foundation-accordion;
 @import "./home.scss";
@@ -38,10 +37,6 @@ html, body{
 }
 
 
-.grid-container{
-    margin: 5rem auto;
-}
-
 .callout{
     border: none;
     border-radius: 10px;
@@ -59,6 +54,13 @@ h2{
 
 table{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+input, select {
+    &:read-only{
+        background: initial;
+        cursor: pointer;
+    }
 }
 
 .flash-wrapper{

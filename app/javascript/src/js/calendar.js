@@ -7,12 +7,16 @@ window.addEventListener('turbolinks:load', function() {
     const loader = document.getElementById('loader');
     let entries = [];
 
-    fetch('/profile/calendar.json')
+    if(calendarEl){
+        fetch('/profile/calendar.json')
         .then(res => res.json())
         .then(data => entries = [...data])
-        .then(() => setUpCalendar())
+        .then(() => {
+            setUpCalendar();
+            loader.style.display = 'none';
+        })
         .catch(err => console.error(err))
-
+    }
     function setUpCalendar(){
         const calendar = new Calendar(calendarEl, {
                 plugins: [dayGridPlugin],
@@ -23,8 +27,6 @@ window.addEventListener('turbolinks:load', function() {
                     hourCycle: 'h23',
                 }
             });
-        loader.style.display = 'none';
         calendar.render();
     }
-  });
-  
+});

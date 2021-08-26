@@ -2,7 +2,7 @@
     .manual
         %h3 Manual Mode
         = f.label :started_at
-        = f.datetime_field :started_at, min: Date.today, required: true
+        = f.datetime_field :started_at, required: true
         = f.label :finish_time
         = f.time_field :finish_time, required: true
         = f.label :entry_type
@@ -12,3 +12,4 @@
         = f.submit "Create", class: "button"
         .mode-switch
             = link_to "🕐 Switch to timer mode", profile_path
+  
