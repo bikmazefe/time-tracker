@@ -3,10 +3,6 @@
 module ApplicationHelper
   include Pagy::Frontend
 
-  def format_date_short(date)
-    date.strftime("%a, %b %e")
-  end
-
   def date_to_iso(date)
     date.iso8601
   end
@@ -40,9 +36,5 @@ module ApplicationHelper
     if from_date || to_date
       " | #{from_date || "..."} - #{to_date || "..."}"
     end
-  end
-
-  def format_date_for_input(field)
-    Time.parse(params[:q][field]).strftime("%Y-%m-%d") if params.dig(:q, field).present?
   end
 end

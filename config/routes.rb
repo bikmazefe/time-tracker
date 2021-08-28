@@ -8,11 +8,8 @@ Rails.application.routes.draw do
   end
 
   post "/entries/start", to: "entries#start", as: "start_entry"
-  resources :entries, only: [:create, :destroy] do
-    member do
-      post "/finish", to: "entries#finish", as: "finish"
-    end
-  end
+  post "/entries/finish", to: "entries#finish", as: "finish"
+  resources :entries, only: [:create, :destroy]
 
   get "/profile", to: "profile#index", as: "profile"
   get "/profile/calendar", to: "profile#calendar", as: "calendar"

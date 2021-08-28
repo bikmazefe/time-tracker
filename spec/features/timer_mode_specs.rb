@@ -15,7 +15,7 @@ RSpec.describe "User uses timer mode" do
     expect(page).to have_content "Entry started!"
   end
 
-  scenario "user starts the timer" do
+  scenario "user stops the timer" do
     entry = FactoryBot.create(:entry, entry_type: "Work", started_at: Time.now - 2.minutes, user: user)
 
     visit :profile
