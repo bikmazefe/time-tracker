@@ -9,7 +9,7 @@
                 %span 
                     %strong#ongoing-duration{data: {"started-at": @ongoing.started_at.iso8601, "timer-target": "ongoing"}}= format_duration(@ongoing.calculate_duration)
                 %span
-                    = link_to finish_entry_path(@ongoing), :method => :post, class: "button success" do 
+                    = link_to finish_path, :method => :post, class: "button success" do 
                         %i.fas.fa-stop
     - else 
         =form_with :model => @new_timer_entry, url: start_entry_path, :method => :post, :local => true do |f|
