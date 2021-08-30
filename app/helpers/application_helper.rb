@@ -13,6 +13,12 @@ module ApplicationHelper
     "#{formatted_time.call(entry.started_at)} - #{formatted_time.call(entry.finished_at)}"
   end
 
+  def get_total_duration(entries)
+    sum_in_sec = entries.reduce(0) { |memo, entry| memo + entry.duration }
+
+    format_duration(sum_in_sec)
+  end
+
   def format_duration(duration)
     seconds_diff = duration
 

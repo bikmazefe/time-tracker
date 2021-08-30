@@ -1,0 +1,48 @@
+.reports{data: { controller: "flatpickr" }}
+    %h3 User Reports 
+    = search_form_for(@q, url: admin_users_path, method: :get) do |f|
+        .grid-x.grid-margin-x.align-middle.align.center.search-form
+            .cell
+                = f.label :user_id_in do 
+                    Users
+                    = f.select :user_id_in, options_from_collection_for_select(User.all, :id, :email, params.dig(:q, :user_id_in)), {include_blank: "All", include_hidden: false}, {multiple: true} 
+            .cell
+                = f.label :entry_type_eq do
+                    Entry type 
+                    = f.select :entry_type_eq, options_for_select([["Work"], ["Personal"]], params.dig(:q, :entry_type_eq)), {include_blank: true}
+            .fieldset.cell
+                %legend Choose or enter a time period
+                = radio_button_tag :time_period, "custom", true, id: "custom_period"
+                = label_tag "custom_period", "Custom"
+                = radio_button_tag :time_period, "this_week", params[:time_period] == "this_week", id: "this_week"
+                = label_tag "this_week", "This week"
+                = radio_button_tag :time_period, "this_month", params[:time_period] == "this_month", id: "this_month"
+                = label_tag "this_month", "This month"
+                = f.label :started_at_gteq do 
+                    From
+                    = f.date_field :started_at_gteq, data: {"flatpickr-target": "picker"}
+                = f.label :started_at_lteq do 
+                    To
+                    = f.date_field :started_at_lteq, data: {"flatpickr-target": "picker"}
+            .button-group.cell
+                = f.submit name: nil, class: "button primary"
+                = f.submit "to CSV", name: nil, class: "button success", onClick: "changeFormat('csv')", data: { disable_with: false }
+                = f.submit "to Excel", name: nil, class: "button success", onClick: "changeFormat('xlsx')", data: { disable_with: false }
+    .table-scroll
+        %table{class: "hover"}
+            %thead
+                %tr
+                    %th{width: "150"} Email
+                    %th{width: "150"}= (params.dig(:q, :entry_type_eq) || "All") << " Entries"
+                    %th{width: "150"} Total Duration
+            %tbody
+                - @users.each do |user, entries|
+                    %tr
+                        %td= user
+                        %td= entries.size
+                        %td= get_total_duration(entries)
+= content_for :js do 
+    :javascript 
+        function changeFormat(format){
+            document.querySelector('form').setAttribute('action', `/admin/users.${format}`)
+        }

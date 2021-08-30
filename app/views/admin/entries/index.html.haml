@@ -1,0 +1,47 @@
+.reports{data: { controller: "flatpickr" }}
+    %h3 Entries
+    = search_form_for(@q, url: admin_entries_path, method: :get) do |f|
+        .grid-x.grid-margin-x.align-middle.align.center.search-form
+            .cell
+                = f.label :user_id_in do 
+                    Users
+                    = f.select :user_id_in, options_from_collection_for_select(User.all, :id, :email, params.dig(:q, :user_id_in)), {include_blank: "All", include_hidden: false}, {multiple: true}
+            .cell 
+                = f.label :started_at_gteq do 
+                    From
+                    = f.date_field :started_at_gteq, data: {"flatpickr-target": "picker"}
+                = f.label :started_at_lteq do 
+                    To
+                    = f.date_field :started_at_lteq, data: {"flatpickr-target": "picker"}
+            .cell
+                = f.label :entry_type_eq do
+                    Entry type 
+                    = f.select :entry_type_eq, options_for_select([["Work"], ["Personal"]], params.dig(:q, :entry_type_eq)), {include_blank: true}
+            .button-group.cell
+                = f.submit name: nil, class: "button primary"
+                = f.submit "to CSV", name: nil, class: "button success", onClick: "changeFormat('csv')", data: { disable_with: false }
+                = f.submit "to Excel", name: nil, class: "button success", onClick: "changeFormat('xlsx')", data: { disable_with: false }
+    .table-scroll
+        = pagy_foundation_nav(@pagy).html_safe
+        %table{class: "hover"}
+            %thead
+                %tr
+                    %th= sort_link(@q, :user_email, "User")
+                    %th Type
+                    %th Comment
+                    %th= sort_link(@q, :duration)
+                    %th= sort_link(@q, :started_at, "Date")
+            %tbody
+                - @entries.each do |entry|
+                    %tr
+                        %td= entry.user.email
+                        %td= entry.entry_type
+                        %td= entry&.comment
+                        %td= format_duration(entry.duration)
+                        %td= "#{entry.started_at.strftime("%b, %d")} | #{get_entry_range(entry)}"
+
+= content_for :js do 
+    :javascript 
+        function changeFormat(format){
+            document.querySelector('form').setAttribute('action', `/admin/entries.${format}`)
+        }

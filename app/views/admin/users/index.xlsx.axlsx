@@ -1,0 +1,14 @@
+wb = xlsx_package.workbook
+
+s = wb.styles
+green_cell = s.add_style bg_color: "04C4A7", fg_color: "FF", sz: 14, alignment: { horizontal: :center, vertical: :center }
+normal_cell = s.add_style alignment: { horizontal: :center }
+header_row = s.add_style bg_color: "04C4A7", fg_color: "FF", sz: 18, alignment: { horizontal: :center, vertical: :center }
+
+sheet = wb.add_worksheet(name: Date.today.strftime("%B %d, %Y"))
+
+sheet.add_row ["User", (params.dig(:q, :entry_type_eq) || "All") << " Entries", "Total Duration"], height: 30, style: header_row
+
+@users.each do |user, entries|
+  sheet.add_row [user, entries.size, get_total_duration(entries)], alignment: { horizontal: :center, vertical: :center }, height: 25
+end

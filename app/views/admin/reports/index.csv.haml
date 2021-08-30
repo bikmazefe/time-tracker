@@ -1,5 +1,0 @@
-- headers = ["Email", "Work Entries", "Personal Entries", "Total Duration"] << get_search_title
-= CSV.generate_line headers
-- @selected_users.each do |user| 
-    - user_entries = user.entries.search(params[:q])
-    = CSV.generate_line([user.email, user_entries.count_by_type("Work"), user_entries.count_by_type("Personal"), format_duration(user_entries.total_duration)]) 

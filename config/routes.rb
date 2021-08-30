@@ -3,8 +3,8 @@ Rails.application.routes.draw do
   root "static#home"
 
   namespace :admin do
+    resources :users, only: [:index]
     resources :entries, only: [:index]
-    resources :reports, only: [:index]
   end
 
   post "/entries/start", to: "entries#start", as: "start_entry"

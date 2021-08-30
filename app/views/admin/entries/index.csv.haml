@@ -1,0 +1,4 @@
+- headers = ["User", "Type", "Comment", "Duration", "Date"]
+= CSV.generate_line headers
+- @results.each do |entry| 
+    = CSV.generate_line([entry.user.email, entry.entry_type, entry&.comment, format_duration(entry.duration), "#{entry.started_at.strftime("%b, %d")} | #{get_entry_range(entry)}"]) 

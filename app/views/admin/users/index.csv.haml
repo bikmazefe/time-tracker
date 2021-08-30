@@ -1,0 +1,4 @@
+- headers = ["User", (params.dig(:q, :entry_type_eq) || "All") << " Entries", "Total Duration"]
+= CSV.generate_line headers
+- @users.each do |user, entries| 
+    = CSV.generate_line([user, entries.size, get_total_duration(entries)]) 
