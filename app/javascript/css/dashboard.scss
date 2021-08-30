@@ -74,6 +74,8 @@
             align-items: center;
             box-shadow: var(--bs);
             border-radius: 0.5rem;
+            background-color: white;
+            z-index: 999;
             span:first-of-type{
                 font-weight: 500;
                 color: var(--purple);

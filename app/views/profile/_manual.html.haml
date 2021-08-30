@@ -9,7 +9,7 @@
         = f.select :entry_type, options_for_select([ ['Work'], ['Personal'] ]), {prompt: "Select Type..."}, required: true
         = f.label :comment
         = f.text_field :comment, placeholder: "Comment"
-        = f.submit "Create", class: "button"
+        = f.submit "Create", class: "button primary"
         .mode-switch
             = link_to "🕐 Switch to timer mode", profile_path
   
